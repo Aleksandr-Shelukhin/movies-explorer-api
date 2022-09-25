@@ -18,8 +18,10 @@ const app = express();
 
 const options = {
   origin: [
-    'https://localhost:3010',
     'http://localhost:3010',
+    'http://alex-shelukhin-movies.nomorepartiesxyz.ru',
+    'https://alex-shelukhin-movies.nomorepartiesxyz.ru',
+    'https://github.com/Aleksandr-Shelukhin',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
