@@ -42,17 +42,9 @@ const createMovie = (req, res, next) => { // создаёт фильм с пер
   })
     .then((movie) => res.send(movie))
     .catch((err) => {
-      // eslint-disable-next-line no-underscore-dangle
       if (
-        err.name === 'ValidationError'
-        // eslint-disable-next-line no-underscore-dangle
-        || err._message === 'movie validation failed'
-      ) {
-        next(
-          new ValidationError(
-            'Переданы некорректные данные для создания карточки',
-          ),
-        );
+        err.name === 'ValidationError') {
+        next(new ValidationError('Переданы некорректные данные для создания карточки'));
       } else {
         next(err);
       }
@@ -69,7 +61,9 @@ const deleteMovie = (req, res, next) => { // удаляет сохранённы
       if (movieOwner !== req.user._id) {
         next(new ForbiddenError('Можно удалять только свои карточки'));
       } else {
-        Movie.findByIdAndRemove(req.params.id).then((removedMovie) => res.send(removedMovie));
+        Movie.findByIdAndRemove(req.params.id)
+          .then((removedMovie) => res.send(removedMovie))
+          .catch(next);
       }
     })
     .catch((err) => {

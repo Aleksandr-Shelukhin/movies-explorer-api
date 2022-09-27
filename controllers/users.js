@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
-const errorCodes = require('../errors/errorsCode');
 const NotFoundError = require('../errors/NotFoundError');
 const ValidationError = require('../errors/ValidationError');
 const ConflictError = require('../errors/ConflictError');
@@ -48,11 +47,6 @@ const createUser = (req, res, next) => { // создает пользовате�
   const {
     name, email, password,
   } = req.body;
-  User.findOne({ email }).then((userFound) => {
-    if (userFound) {
-      throw new ConflictError('Пользователь с таким email уже зарегистрирован');
-    }
-  });
   bcrypt
     .hash(password, 10)
     .then((hash) => User.create({
@@ -62,14 +56,13 @@ const createUser = (req, res, next) => { // создает пользовате�
     }))
     .then((user) => res.send(user.deleteUserPassword()))
     .catch((err) => {
-      // eslint-disable-next-line no-underscore-dangle
       if (err.name === 'ValidationError') {
         next(
           new ValidationError(
             'Переданы некорректные данные при создании пользователя',
           ),
         );
-      } else if (err.code === errorCodes.ConflictError) {
+      } else if (err.code === 11000) {
         next(
           new ConflictError('Пользователь с указанным email уже существует'),
         );
@@ -94,8 +87,16 @@ const updateUserInfo = (req, res, next) => { // обновляет информ�
       res.send(user);
     })
     .catch((err) => {
-      if (err.statusCode === ValidationError || err.name === 'CastError') {
-        next(new ValidationError('Введенеы неверные данные пользователя'));
+      if (err.name === 'ValidationError') {
+        next(
+          new ValidationError(
+            'Переданы некорректные данные при создании пользователя',
+          ),
+        );
+      } else if (err.code === 11000) {
+        next(
+          new ConflictError('Пользователь с указанным email уже существует'),
+        );
       } else {
         next(err);
       }
