@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const helmet = require('helmet');
 const limiter = require('./middlewares/limiter');
-const devDatabaseUrl = require('./utils/config');
+const { devDatabaseUrl } = require('./utils/config');
 
 const routes = require('./routes/index');
 const error = require('./middlewares/error');
