@@ -40,17 +40,17 @@ const idValidate = celebrate({
 
 const createMovieValidate = celebrate({
   body: Joi.object().keys({
-    country: Joi.string().required().min(2).max(30),
-    director: Joi.string().required().min(2).max(30),
+    country: Joi.string().required().min(2),
+    director: Joi.string().required().min(2),
     duration: Joi.number().required(),
     year: Joi.string().required(),
-    description: Joi.string().required().min(2).max(5000),
+    description: Joi.string().required().min(2),
     image: Joi.string().required().custom(checkUrl),
-    trailerLink: Joi.string().required().custom(checkUrl),
+    trailerLink: Joi.string(),
     thumbnail: Joi.string().required().custom(checkUrl),
     movieId: Joi.number().required(),
-    nameRU: Joi.string().required().min(1).max(100),
-    nameEN: Joi.string().required().min(1).max(100),
+    nameRU: Joi.string().required().min(1),
+    nameEN: Joi.string().min(1),
   }),
 });
 
