@@ -50,7 +50,7 @@ const createMovieValidate = celebrate({
     thumbnail: Joi.string().required().custom(checkUrl),
     movieId: Joi.number().required(),
     nameRU: Joi.string().required().min(1),
-    nameEN: Joi.string().min(1),
+    nameEN: Joi.string(),
   }),
 });
 
