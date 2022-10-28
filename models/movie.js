@@ -32,11 +32,6 @@ const movieSchema = new mongoose.Schema({
   },
   trailerLink: { // ссылка на трейлер фильма
     type: String,
-    required: [true, 'Поле "trailerLink" должно быть заполнено'],
-    validate: {
-      validator: (v) => validator.isURL(v),
-      message: 'Неподходящий формат ссылки',
-    },
   },
   thumbnail: { // миниатюрное изображение постера к фильму
     type: String,
@@ -62,7 +57,6 @@ const movieSchema = new mongoose.Schema({
   },
   nameEN: { // название фильма на английском языке
     type: String,
-    required: [true, 'Поле "nameEN" должно быть заполнено'],
   },
 });
 
