@@ -10,7 +10,7 @@ router.post('/signup', createUserValidate, createUser);
 router.post('/signin', loginValidate, login);
 
 router.use(auth);
-
+router.use('/token', (req, res) => res.status(200).send({}));
 router.use('/users', userRouter);
 router.use('/movies', movieRouter);
 
